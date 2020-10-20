@@ -27,3 +27,42 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/client/Dockerfile'
         tags: |
           $(tag)
+  - job: Build2
+    displayName: Build2
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/client/Dockerfile'
+        tags: |
+          "2"
+- stage: Deploy
+  displayName: Deploy1
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/client/Dockerfile'
+        tags: |
+          "4"
+  - job: Deploy2
+    displayName: Deploy2
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/client/Dockerfile'
+        tags: |
+          "3"
